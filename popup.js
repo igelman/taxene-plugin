@@ -22,6 +22,15 @@ function getCurrentTabUrl(callback) {
 
 }
 
+// callback function for getCurrentTabUrl
+// From the tab url, extract the node id.
+// With the node id, construct the api url.
+// GET the children from Selene (which prints to a table).
+function doTheWholeThing (url) {
+	var nodeId = "4014759"; // actually this will be function(url) but I'm not there yet
+	getSeleneJson( constructApiUrl(nodeId) );
+}
+
 function constructApiUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + queryParameters;
@@ -32,6 +41,18 @@ function getSeleneJson(apiUrl) {
 	var ajaxUrl = apiUrl;
 	$.getJSON( ajaxUrl, function( data ){
 		console.log(data);
+		var table = "<table><thead></thead><tbody>";
+		data.data.children.list.forEach( function(item, index) {
+			var tr = "<tr>";
+			tr += "<td>" + item.docId + "</td>";
+			tr += "<td>" + item.primaryParentWeight + "</td>";
+			tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
+			tr +=  "</tr>";
+			table += tr;
+			//$( '#data' ).append(index + ": " + item.docId + "<br>");
+		});
+		table += "</tbody></table>";
+		$( '#data' ).append(table);
 	});
 }
 
