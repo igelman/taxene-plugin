@@ -16,6 +16,7 @@ function getCurrentTabUrl(callback) {
 		var message = "";
 		message += "<p>" + url + "</p>";
 		message += "<p>" + constructApiUrl("4014759") + "</p>";
+		getSeleneJson(constructApiUrl("4014759"));
 		callback(message);
 	});
 
@@ -25,6 +26,13 @@ function constructApiUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + queryParameters;
 	return apiUrl;
+}
+
+function getSeleneJson(apiUrl) {
+	var ajaxUrl = apiUrl;
+	$.getJSON( ajaxUrl, function( data ){
+		console.log(data);
+	});
 }
 
 function printMessage(message) {
