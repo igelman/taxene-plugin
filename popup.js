@@ -10,10 +10,14 @@ function getCurrentTabUrl(callback) {
 		
 		callback(url);
 	});
+
 }
 
 function printMessage(message) {
-	console.log(message);
+	$( '#status' ).append( "<p>" + message );
 }
 
-getCurrentTabUrl(printMessage);
+document.addEventListener('DOMContentLoaded', function(){
+	getCurrentTabUrl(printMessage);
+});
+
