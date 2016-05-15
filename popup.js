@@ -1,3 +1,4 @@
+// TODO: Check for Selene availability (i.e., LAN connection).
 // TODO: Don't do anything if the tab isn't a VW taxonomy node.
 // TODO: Handle the VW home page.
 // TODO: Inject the scores into the page instead of using a popup.
