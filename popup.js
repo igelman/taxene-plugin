@@ -1,7 +1,18 @@
+// TODO: Don't do anything if the tab isn't a VW taxonomy node.
+// TODO: Handle the VW home page.
+// TODO: Inject the scores into the page instead of using a popup.
 
+/*
+	Config settings for Selene api.	
+*/
 var seleneUrl = "http://nyselene1.ops.about.com:8080/";
 var taxeneEndpoint = "taxene/children/";
 var queryParameters = "childrenNodeTypes=TAXONOMY&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
+
+// Kick off the whole thing after the popup loads.
+document.addEventListener('DOMContentLoaded', function(){
+	getCurrentTabUrl(doTheWholeThing);
+});
 
 function getCurrentTabUrl(callback) {
 	var queryInfo = {
@@ -20,16 +31,20 @@ function getCurrentTabUrl(callback) {
 }
 
 // callback function for getCurrentTabUrl
-// From the tab url, extract the node id.
-// With the node id, construct the api url.
-// GET the children from Selene (which prints to a table).
+// Extract the node id from the tab url.
+// Construct the api url based on the node id (and the config settings).
+// GET the children from Selene (and print to a table).
 function doTheWholeThing (url) {
-	var nodeId = extractNodeId(url)
+	var nodeId = extractNodeId(url);
 	getSeleneJson( constructApiUrl(nodeId) );
 }
 
+// DocId is (almost) always the numeric string following the last hyphen in the url.
 function extractNodeId(url) {
-	return "4014759"; // actually this will be function(url) but I'm not there yet
+    var lastHyphen = url.lastIndexOf("-");
+    var nodeId = url.substring(lastHyphen + 1);
+    console.log("function extractNodeId\n" + "nodeId: " + nodeId);
+    return nodeId;
 }
 
 function constructApiUrl(docId) {
@@ -56,11 +71,3 @@ function getSeleneJson(apiUrl) {
 		$( '#data' ).append(table);
 	});
 }
-	/*
-	http://nyselene1.ops.about.com:8080/taxene/children/4014759?childrenNodeTypes=TAXONOMY&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true
-	*/
-
-document.addEventListener('DOMContentLoaded', function(){
-	getCurrentTabUrl(doTheWholeThing);
-});
-
