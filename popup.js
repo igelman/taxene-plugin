@@ -8,7 +8,7 @@
 */
 var seleneUrl = "http://nyselene1.ops.about.com:8080/";
 var taxeneEndpoint = "taxene/children/";
-var queryParameters = "?childrenNodeTypes=TAXONOMY&childrenNodeTypes=DOCUMENT&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
+var queryParameters = "childrenNodeTypes=TAXONOMY&childrenNodeTypes=DOCUMENT&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
 
 // Kick off the whole thing after the popup loads.
 document.addEventListener('DOMContentLoaded', function(){
