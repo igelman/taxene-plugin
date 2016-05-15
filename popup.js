@@ -51,6 +51,7 @@ function extractNodeId(url) {
 function constructApiUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + queryParameters;
+	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
 	return apiUrl;
 }
 
