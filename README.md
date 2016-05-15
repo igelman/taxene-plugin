@@ -1,5 +1,5 @@
 # taxene-plugin
-Browser bar button that displays children of taxonomy node.
+Browser bar button that displays taxonomy node's children, with some important information like slug & weight.
 ## Installation
 - Download to local hard drive
 - Open chrome://extensions/
