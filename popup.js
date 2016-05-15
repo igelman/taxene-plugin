@@ -1,4 +1,4 @@
-// http://nyselene1.ops.about.com:8080/taxene/children/4014759?childrenNodeTypes=TAXONOMY&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true
+
 var seleneUrl = "http://nyselene1.ops.about.com:8080/";
 var taxeneEndpoint = "taxene/children/";
 var queryParameters = "childrenNodeTypes=TAXONOMY&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
@@ -12,12 +12,9 @@ function getCurrentTabUrl(callback) {
 	chrome.tabs.query(queryInfo, function(tabs) {
 		var tab = tabs[0];
 		var url = tab.url;
-		
-		var message = "";
-		message += "<p>" + url + "</p>";
-		message += "<p>" + constructApiUrl("4014759") + "</p>";
-		getSeleneJson(constructApiUrl("4014759"));
-		callback(message);
+		console.log("function getCurrentTabUrl\n" + "tab.url: " + url);
+
+		callback(url);
 	});
 
 }
@@ -27,8 +24,12 @@ function getCurrentTabUrl(callback) {
 // With the node id, construct the api url.
 // GET the children from Selene (which prints to a table).
 function doTheWholeThing (url) {
-	var nodeId = "4014759"; // actually this will be function(url) but I'm not there yet
+	var nodeId = extractNodeId(url)
 	getSeleneJson( constructApiUrl(nodeId) );
+}
+
+function extractNodeId(url) {
+	return "4014759"; // actually this will be function(url) but I'm not there yet
 }
 
 function constructApiUrl(docId) {
@@ -55,12 +56,11 @@ function getSeleneJson(apiUrl) {
 		$( '#data' ).append(table);
 	});
 }
-
-function printMessage(message) {
-	$( '#status' ).append( "<div>" + message + "</div>" );
-}
+	/*
+	http://nyselene1.ops.about.com:8080/taxene/children/4014759?childrenNodeTypes=TAXONOMY&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true
+	*/
 
 document.addEventListener('DOMContentLoaded', function(){
-	getCurrentTabUrl(printMessage);
+	getCurrentTabUrl(doTheWholeThing);
 });
 
