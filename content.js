@@ -1,4 +1,11 @@
 /*
+	This script sends taxonomy node url
+	to background script, and receives
+	a json object of information
+	about the node's children in return.
+	It injects that information onto the page,
+	allowing content manager to analyze
+	the taxaonomy structure.
 NOTES
 jQuery to select anchors with href matching a url: $('a[href^="http://example.com/external/link"]').
 GET the children.
@@ -7,52 +14,43 @@ foreach child
 	append the child's weight to the innertext or something
 */
 
+// listener to get the list back
+// This isn't working. Maybe I need to set up a port?
+// No actually I think I just need a response callback in the sendMessage.
+// The question now is how does background.js send the response?
 /*
-	Config settings for Selene api.	
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		console.log("content.js addListener received a message");
+		if (request.message === "sendTaxeneChildren") {
+			console.log(createTable(list));
+		}
+	}
+);
 */
-var seleneUrl = "http://nyselene1.ops.about.com:8080/";
-var taxeneEndpoint = "taxene/children/";
-var queryParameters = "childrenNodeTypes=TAXONOMY&childrenNodeTypes=DOCUMENT&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
-
 
 var url = window.location.href;
-var nodeId = extractNodeId(url);
-var apiUrl = constructApiUrl(nodeId);
-getSeleneJson(apiUrl);
+console.log("content.js url: " + url);
 
-// DocId is (almost) always the numeric string following the last hyphen in the url.
-function extractNodeId(url) {
-    var lastHyphen = url.lastIndexOf("-");
-    var nodeId = url.substring(lastHyphen + 1);
-    console.log("function extractNodeId\n" + "nodeId: " + nodeId);
-    return nodeId;
-}
+// sender to request the taxene children
+chrome.runtime.sendMessage({
+	"message": "getTaxeneChildren",
+	"url": url
+}, function (response){
+	console.log(createTable(response.list));
+});
 
-function constructApiUrl(docId) {
-	var apiUrl = "";
-	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + queryParameters;
-	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
-	return apiUrl;
-}
-
-// this fails because of the insecure request to Selene
-// Handle it in background js maybe?
-function getSeleneJson(apiUrl) {
-	var ajaxUrl = apiUrl;
-	$.getJSON( ajaxUrl, function( data ){
-		console.log(data);
-		var table = "<table><thead></thead><tbody>";
-		data.data.children.list.forEach( function(item, index) {
-			var tr = "<tr>";
-			tr += "<td>" + item.docId + "</td>";
-			tr += "<td>" + item.primaryParentWeight + "</td>";
-			tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
-			tr +=  "</tr>";
-			table += tr;
-			//$( '#data' ).append(index + ": " + item.docId + "<br>");
-		});
-		table += "</tbody></table>";
-		console.log(table);
+function createTable(list) {
+	var table = "<table><thead></thead><tbody>";
+	list.forEach( function(item, index) {
+		var tr = "<tr>";
+		tr += "<td>" + item.docId + "</td>";
+		tr += "<td>" + item.primaryParentWeight + "</td>";
+		tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
+		tr +=  "</tr>";
+		table += tr;
+		//$( '#data' ).append(index + ": " + item.docId + "<br>");
 	});
+	table += "</tbody></table>";
+	return (table);
 }
-
