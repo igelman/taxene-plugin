@@ -12,6 +12,10 @@ var queryParameters = "childrenNodeTypes=TAXONOMY&childrenNodeTypes=DOCUMENT&isR
 
 
 // Listen for request from content.js
+// Figure out the node's doc id.
+// Construct the Selene call.
+// GET the children from Selene.
+// Send that back to content.js so it can be presented in the browser.
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if( request.message === "getTaxeneChildren" ) {
@@ -20,7 +24,7 @@ chrome.runtime.onMessage.addListener(
 			var apiUrl = constructApiUrl(nodeId);
 			getSeleneJson(apiUrl, sendResponse);
 			console.log("addListener about to return true");
-			return true;
+			return true; // Returning true causes the message connection to persist until getSeleneJson (which is async) finishes, at which point the payload is sent back to content.js and the connection closes.
 			//"If you want to asynchronously use sendResponse, add 'return true;' to the onMessage event handler." https://developer.chrome.com/extensions/messaging
 		}
 	}	
@@ -34,7 +38,7 @@ function extractNodeId(url) {
     return nodeId;
 }
 
-// Assemble the Selene taxene api url from the node docId
+// Construct the Selene taxene api url from the node docId
 function constructApiUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + queryParameters;
@@ -42,7 +46,7 @@ function constructApiUrl(docId) {
 	return apiUrl;
 }
 
-//GET children from taxenee
+//GET children from taxene
 function getSeleneJson(apiUrl, sendResponse) {
 	var ajaxUrl = apiUrl;
 	$.getJSON( ajaxUrl, function( data ){
@@ -51,6 +55,7 @@ function getSeleneJson(apiUrl, sendResponse) {
 	});
 }
 
+/*
 //Send the Selene list back to content.js
 function sendListToContent(list) {
 	console.log("background.js sendListToContent about to send message");
@@ -59,3 +64,4 @@ function sendListToContent(list) {
 		"list": list
 	});
 }
+*/
