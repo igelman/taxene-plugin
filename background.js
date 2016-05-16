@@ -19,6 +19,7 @@ chrome.runtime.onMessage.addListener(
 			var nodeId = extractNodeId(url);
 			var apiUrl = constructApiUrl(nodeId);
 			getSeleneJson(apiUrl, sendResponse);
+			console.log("addListener about to return true");
 			return true;
 			//"If you want to asynchronously use sendResponse, add 'return true;' to the onMessage event handler." https://developer.chrome.com/extensions/messaging
 		}
