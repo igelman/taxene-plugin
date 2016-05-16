@@ -22,12 +22,14 @@ chrome.runtime.sendMessage({
 }, function (response){
 	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + createTable(response) + "</div>";
 	console.log(divOfChildren);
-	$(divOfChildren).insertBefore("#header_1-0");
-	
+	$(divOfChildren).insertAfter("#header_1-0");
+	$(divOfChildren).style.padding = "150px 150px";
 });
 
 function createTable(list) {
-	var table = "<table><thead></thead><tbody>";
+	var table = "<table><thead><tr>";
+	table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
+	table += "</tr></thead><tbody>";
 	list.forEach( function(item, index) {
 		var tr = "<tr>";
 		tr += "<td>" + item.docId + "</td>";
@@ -36,7 +38,6 @@ function createTable(list) {
 		tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
 		tr +=  "</tr>";
 		table += tr;
-		//$( '#data' ).append(index + ": " + item.docId + "<br>");
 	});
 	table += "</tbody></table>";
 	return (table);
