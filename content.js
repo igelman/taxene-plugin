@@ -37,7 +37,7 @@ chrome.runtime.sendMessage({
 	"message": "getTaxeneChildren",
 	"url": url
 }, function (response){
-	console.log(createTable(response.list));
+	console.log(createTable(response));
 });
 
 function createTable(list) {
