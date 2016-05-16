@@ -20,7 +20,10 @@ chrome.runtime.sendMessage({
 	"message": "getTaxeneChildren",
 	"url": window.location.href
 }, function (response){
-	console.log(createTable(response));
+	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + createTable(response) + "</div>";
+	console.log(divOfChildren);
+	$(divOfChildren).insertBefore("#header_1-0");
+	
 });
 
 function createTable(list) {
@@ -28,6 +31,7 @@ function createTable(list) {
 	list.forEach( function(item, index) {
 		var tr = "<tr>";
 		tr += "<td>" + item.docId + "</td>";
+			tr += "<td>" + item.nodeType.toLowerCase() + "</td>";
 		tr += "<td>" + item.primaryParentWeight + "</td>";
 		tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
 		tr +=  "</tr>";
