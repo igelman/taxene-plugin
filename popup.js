@@ -54,10 +54,13 @@ function getSeleneJson(apiUrl) {
 	var ajaxUrl = apiUrl;
 	$.getJSON( ajaxUrl, function( data ){
 		console.log(data);
-		var table = "<table><thead></thead><tbody>";
+		var table = "<table><thead><tr>";
+		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
+		table += "</tr></thead><tbody>";
 		data.data.children.list.forEach( function(item, index) {
 			var tr = "<tr>";
 			tr += "<td>" + item.docId + "</td>";
+			tr += "<td>" + item.nodeType.toLowerCase() + "</td>";
 			tr += "<td>" + item.primaryParentWeight + "</td>";
 			tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
 			tr +=  "</tr>";
