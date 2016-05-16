@@ -14,28 +14,11 @@ foreach child
 	append the child's weight to the innertext or something
 */
 
-// listener to get the list back
-// This isn't working. Maybe I need to set up a port?
-// No actually I think I just need a response callback in the sendMessage.
-// The question now is how does background.js send the response?
-/*
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		console.log("content.js addListener received a message");
-		if (request.message === "sendTaxeneChildren") {
-			console.log(createTable(list));
-		}
-	}
-);
-*/
-
-var url = window.location.href;
-console.log("content.js url: " + url);
-
-// sender to request the taxene children
+// Send message to request the taxene children
+// When we receive the response, create a table.
 chrome.runtime.sendMessage({
 	"message": "getTaxeneChildren",
-	"url": url
+	"url": window.location.href
 }, function (response){
 	console.log(createTable(response));
 });
