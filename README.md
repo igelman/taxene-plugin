@@ -11,6 +11,6 @@ Browser bar button that displays taxonomy node's children, with some important i
 
 ## To do
 - Check for Selene availability (i.e., LAN connection).
-- Don't do anything if the tab isn't a VW taxonomy node.
 - Handle the VW home page.
-- Inject the scores into the page instead of using a popup.
+- Make the injected table less ugly.
+- Add a "dismiss" control to the inserted table.
