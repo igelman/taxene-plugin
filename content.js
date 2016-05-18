@@ -20,11 +20,17 @@ chrome.runtime.sendMessage({
 	"message": "getTaxeneChildren",
 	"url": window.location.href
 }, function (response){
-	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + createTable(response) + "</div>";
+	var toggleButton = createToggleButton();
+	var childrenTable = createTable(response);
+	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + toggleButton + childrenTable + "</div>";
 	console.log(divOfChildren);
-	$(divOfChildren).insertAfter("#header_1-0");
+	$("body").append(divOfChildren);
 	$(divOfChildren).style.padding = "150px 150px";
 });
+
+function createToggleButton() {
+	return "<a id='taxenePluginToggleButton'>+</a>";
+}
 
 function createTable(list) {
 	var table = "<table><thead><tr>";
@@ -42,3 +48,12 @@ function createTable(list) {
 	table += "</tbody></table>";
 	return (table);
 }
+
+/*
+	Scope the listener and button to MY container to make sure I don't conflict with a class
+	
+	$container = $('#container');
+	$container.find('.button').on('click', function() {
+		$container.toggleClass('collapsed');	
+	});
+*/
