@@ -17,6 +17,9 @@
 			"js": [
 				"jquery-2.2.3.min.js",
 				"content.js"
+			],
+			"css": [
+				"content.css"
 			]
 
 		}
