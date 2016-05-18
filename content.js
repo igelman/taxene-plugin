@@ -35,7 +35,7 @@ function createToggleButton() {
 function addButtonListener() {
 	var $containerDiv = $("#taxonomyChildrenTaxenePlugIn");
 	$containerDiv.find("#taxenePluginToggleButton").on("click", function() {
-		$containerDiv.toggleClass("collapsed");
+		$containerDiv.animate({height:'50px'}); //toggleClass("collapsed");
 	});
 }
 
