@@ -20,3 +20,7 @@ Use jquery to bind the button to click. Click toggles a class. CSS changes the h
 	max-height: 300px;
 	z-index: 1000;
 }
+
+.collapsed {
+	height: 50px;
+}

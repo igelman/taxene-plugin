@@ -25,10 +25,18 @@ chrome.runtime.sendMessage({
 	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + toggleButton + childrenTable + "</div>";
 	console.log(divOfChildren);
 	$("body").append(divOfChildren);
+	addButtonListener();
 });
 
 function createToggleButton() {
 	return "<a id='taxenePluginToggleButton'>+</a>";
+}
+
+function addButtonListener() {
+	var $containerDiv = $("#taxonomyChildrenTaxenePlugIn");
+	$containerDiv.find("#taxenePluginToggleButton").on("click", function() {
+		$containerDiv.toggleClass("collapsed");
+	});
 }
 
 function createTable(list) {
