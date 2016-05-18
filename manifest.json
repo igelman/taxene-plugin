@@ -16,9 +16,11 @@
 			],
 			"js": [
 				"jquery-2.2.3.min.js",
+				"jquery-ui.min.js",
 				"content.js"
 			],
 			"css": [
+				"jquery-ui.min.css",
 				"content.css"
 			]
 
