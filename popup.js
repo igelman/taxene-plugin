@@ -71,3 +71,4 @@ function getSeleneJson(apiUrl) {
 		$( '#data' ).append(table);
 	});
 }
+

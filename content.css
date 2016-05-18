@@ -1,0 +1,22 @@
+/*
+
+#container width % of the window, fix the height in pixels ~400-500, max-height
+position fixed with top & left
+z index to bring it to the front. Use a high number like 100 and verify that it overlays everything
+overflow y set to auto to bring the vertical scrollbar in, but not the horizontal
+
+in the mark-up, add a button to collapse the container
+Use jquery to bind the button to click. Click toggles a class. CSS changes the height based on that class (and even adds an animation)
+
+#container {
+	min-height:
+	}
+*/
+
+#taxonomyChildrenTaxenePlugIn {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	max-height: 300px;
+	z-index: 1000;
+}

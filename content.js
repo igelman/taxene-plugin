@@ -25,7 +25,6 @@ chrome.runtime.sendMessage({
 	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + toggleButton + childrenTable + "</div>";
 	console.log(divOfChildren);
 	$("body").append(divOfChildren);
-	$(divOfChildren).style.padding = "150px 150px";
 });
 
 function createToggleButton() {
