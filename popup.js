@@ -69,6 +69,7 @@ function getSeleneJson(apiUrl) {
 		});
 		table += "</tbody></table>";
 		$( '#data' ).append(table);
+		$( '#status' ).html("");
 	});
 }
 
