@@ -18,9 +18,12 @@ Use jquery to bind the button to click. Click toggles a class. CSS changes the h
 	right: 0px;
 	top: 0px;
 	max-height: 300px;
+	overflow-y: scroll;
 	z-index: 1000;
+	background-color: #87E3EF;
 }
 
 .collapsed {
 	height: 50px;
+	overflow-y: hidden;
 }

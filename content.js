@@ -24,7 +24,8 @@ chrome.runtime.sendMessage({
 	var childrenTable = createTable(response);
 	var divOfChildren = "<div id='taxonomyChildrenTaxenePlugIn'>" + toggleButton + childrenTable + "</div>";
 	console.log(divOfChildren);
-	$("body").append(divOfChildren);
+	$( "body" ).append(divOfChildren);
+	$( "#taxonomyChildrenTaxenePlugIn" ).draggable();
 	addButtonListener();
 });
 
@@ -33,9 +34,9 @@ function createToggleButton() {
 }
 
 function addButtonListener() {
-	var $containerDiv = $("#taxonomyChildrenTaxenePlugIn");
+	var $containerDiv = $( "#taxonomyChildrenTaxenePlugIn" );
 	$containerDiv.find("#taxenePluginToggleButton").on("click", function() {
-		$containerDiv.animate({height:'50px'}); //toggleClass("collapsed");
+		$containerDiv.toggleClass("collapsed");
 	});
 }
 
