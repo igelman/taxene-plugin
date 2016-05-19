@@ -80,7 +80,7 @@ function getSeleneJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-		$( '#taxene-data' ).append(table);
+		$( '#taxene-data' ).append("<h2>Taxene</h2>" + table);
 		$( '#status' ).html("");
 	});
 }
@@ -102,7 +102,7 @@ function getSolrJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-		$( '#solr-data' ).append(table);
+		$( '#solr-data' ).append("<h2>Solr</h2>" + table);
 	});
 }
 
