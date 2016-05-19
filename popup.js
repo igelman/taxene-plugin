@@ -90,13 +90,14 @@ function getSolrJson(apiUrl) {
 	$.getJSON( ajaxUrl, function (data) {
 		console.log(data);
 		var table = "<table><thead><tr>";
-		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
+		table += "<th>docId</th><th>Updated</th><th>Title</th><th>Slug</th>";
 		table += "</tr></thead><tbody>";
 		data.response.docs.forEach( function(item, index) {
 			var cellArray = [
 				item.docId,
 				item.updatedDate,	
-				"<a target='_blank' href='" + item.url + "'>" + item.title + "</a>"
+				"<a target='_blank' href='" + item.url + "'>" + item.title + "</a>",
+				item.slug
 			];
 			table += makeTr(cellArray);
 		});
