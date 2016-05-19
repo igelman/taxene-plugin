@@ -41,6 +41,7 @@ function getCurrentTabUrl(callback) {
 function doTheWholeThing (url) {
 	var nodeId = extractNodeId(url);
 	getSeleneJson( constructSeleneUrl(nodeId) );
+	getSolrJson( constructSolrUrl() );
 }
 
 // DocId is (almost) always the numeric string following the last hyphen in the url.
@@ -56,6 +57,10 @@ function constructSeleneUrl(docId) {
 	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + taxeneQueryParameters;
 	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
 	return apiUrl;
+}
+
+function constructSolrUrl() {
+	return solrUrl + solrEndpoint + "?" + solrQueryParameters;
 }
 
 function getSeleneJson(apiUrl) {
@@ -75,8 +80,28 @@ function getSeleneJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-		$( '#data' ).append(table);
+		$( '#taxene-data' ).append(table);
 		$( '#status' ).html("");
+	});
+}
+
+function getSolrJson(apiUrl) {
+	var ajaxUrl = apiUrl;
+	$.getJSON( ajaxUrl, function (data) {
+		console.log(data);
+		var table = "<table><thead><tr>";
+		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
+		table += "</tr></thead><tbody>";
+		data.response.docs.forEach( function(item, index) {
+			var cellArray = [
+				item.docId,
+				item.updatedDate,	
+				"<a target='_blank' href='" + item.url + "'>" + item.title + "</a>"
+			];
+			table += makeTr(cellArray);
+		});
+		table += "</tbody></table>";
+		$( '#solr-data' ).append(table);
 	});
 }
 
