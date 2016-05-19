@@ -118,7 +118,7 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 		});
 */
 		table += "</tbody></table>";
-		$( '#taxeneBreadcrumb-data' ).append("<h3>Ancestors</h3>" + table);
+		$( '#taxeneBreadcrumb-data' ).append("<h3>Ancestors</h3>" + data);
 	});
 }
 
