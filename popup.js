@@ -70,8 +70,6 @@ function constructTaxeneBreadcrumbUrl(docId) {
 	return apiUrl;
 }
 
-
-
 function constructSolrUrl() {
 	var solrUrl = solrUrl + solrEndpoint + "?" + solrQueryParameters;
 	console.log(solrUrl);
