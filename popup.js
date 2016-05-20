@@ -93,11 +93,7 @@ function getTaxeneChildrenJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-<<<<<<< HEAD
-		$( '#taxene-data' ).append("<h2>Taxene</h2>" + table);
-=======
 		$( '#taxene-data' ).append("<h3>Children</h3>" + table);
->>>>>>> origin/master
 		$( '#status' ).html("");
 	});
 }
@@ -143,11 +139,7 @@ function getSolrJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-<<<<<<< HEAD
-		$( '#solr-data' ).append("<h2>Solr</h2>" + table);
-=======
 		$( '#solr-data' ).append("<h3>Approved docs</h3>" + table);
->>>>>>> origin/master
 	});
 }
 
