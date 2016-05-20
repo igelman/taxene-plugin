@@ -48,7 +48,7 @@ function createTable(list) {
 		var tr = "<tr>";
 		tr += "<td>" + item.docId + "</td>";
 			tr += "<td>" + item.nodeType.toLowerCase() + "</td>";
-		tr += "<td>" + item.primaryParentWeight + "</td>";
+		tr += "<td>" + item.primaryParentWeight.toLocaleString() + "</td>";
 		tr += "<td>" + "<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>" + "</td>";
 		tr +=  "</tr>";
 		table += tr;

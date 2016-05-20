@@ -74,7 +74,7 @@ function getSeleneJson(apiUrl) {
 			var cellArray = [
 				item.docId,
 				item.nodeType.toLowerCase(),
-				item.primaryParentWeight,	
+				item.primaryParentWeight.toLocaleString(),	
 				"<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>"
 			];
 			table += makeTr(cellArray);
