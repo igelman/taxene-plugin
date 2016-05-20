@@ -2,8 +2,11 @@
 	Config settings for Selene api.	
 */
 var seleneUrl = "http://nyselene1.ops.about.com:8080/";
-var taxeneEndpoint = "taxene/children/";
-var taxeneQueryParameters = "childrenNodeTypes=TAXONOMY&childrenNodeTypes=DOCUMENT&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
+var taxeneChildrenEndpoint = "taxene/children/";
+var taxeneChildrenQueryParameters = "childrenNodeTypes=TAXONOMY&childrenNodeTypes=DOCUMENT&isRecursive=false&includeDocumentSummaries=true&includeConfigs=true";
+
+var taxeneBreadcrumbEndpoint = "taxene/breadcrumb/";
+var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 
 /*
 	Config settings for Solr api.	
@@ -40,8 +43,9 @@ function getCurrentTabUrl(callback) {
 // GET the children from Selene (and print to a table).
 function doTheWholeThing (url) {
 	var nodeId = extractNodeId(url);
-	getSeleneJson( constructSeleneUrl(nodeId) );
+	getTaxeneChildrenJson( constructTaxeneChildrenUrl(nodeId) );
 	getSolrJson( constructSolrUrl() );
+	getTaxeneBreadcrumbJson( constructTaxeneBreadcrumbUrl(nodeId) );
 }
 
 // DocId is (almost) always the numeric string following the last hyphen in the url.
@@ -52,18 +56,27 @@ function extractNodeId(url) {
     return nodeId;
 }
 
-function constructSeleneUrl(docId) {
+function constructTaxeneChildrenUrl(docId) {
 	var apiUrl = "";
-	apiUrl += seleneUrl + taxeneEndpoint + docId + "?" + taxeneQueryParameters;
+	apiUrl += seleneUrl + taxeneChildrenEndpoint + docId + "?" + taxeneChildrenQueryParameters;
 	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
 	return apiUrl;
 }
+
+function constructTaxeneBreadcrumbUrl(docId) {
+	var apiUrl = "";
+	apiUrl += seleneUrl + taxeneBreadcrumbEndpoint + docId + "?" + taxeneBreadcrumbQueryParameters;
+	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
+	return apiUrl;
+}
+
+
 
 function constructSolrUrl() {
 	return solrUrl + solrEndpoint + "?" + solrQueryParameters;
 }
 
-function getSeleneJson(apiUrl) {
+function getTaxeneChildrenJson(apiUrl) {
 	var ajaxUrl = apiUrl;
 	$.getJSON( ajaxUrl, function( data ){
 		console.log(data);
@@ -80,8 +93,36 @@ function getSeleneJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
+<<<<<<< HEAD
 		$( '#taxene-data' ).append("<h2>Taxene</h2>" + table);
+=======
+		$( '#taxene-data' ).append("<h3>Children</h3>" + table);
+>>>>>>> origin/master
 		$( '#status' ).html("");
+	});
+}
+
+function getTaxeneBreadcrumbJson(apiUrl) {
+	var ajaxUrl = apiUrl;
+	$.getJSON( ajaxUrl, function( data ){
+		console.log("getTaxeneBreadcrumbJson:");
+		console.log(data);
+		var table = "<table><thead><tr>";
+		table += "<th>Level</th><th>DocId</th><th>Slug</th><th>Weight</th>";
+		table += "</tr></thead><tbody>";
+/*
+		data.data.children.list.forEach( function(item, index) {
+			var cellArray = [
+				item.docId,
+				item.nodeType.toLowerCase(),
+				item.primaryParentWeight,	
+				"<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>"
+			];
+			table += makeTr(cellArray);
+		});
+*/
+		table += "</tbody></table>";
+		$( '#taxeneBreadcrumb-data' ).append("<h3>Ancestors</h3>" + data);
 	});
 }
 
@@ -102,7 +143,11 @@ function getSolrJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
+<<<<<<< HEAD
 		$( '#solr-data' ).append("<h2>Solr</h2>" + table);
+=======
+		$( '#solr-data' ).append("<h3>Approved docs</h3>" + table);
+>>>>>>> origin/master
 	});
 }
 
