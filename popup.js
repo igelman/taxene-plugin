@@ -13,7 +13,8 @@ var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 */
 var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
 var solrEndpoint = "solr/cmsDocs_rep/select";
-var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AupdatedDate%3A%5BNOW%2FDAY+TO+*%5D&sort=updatedDate+desc&fl=docId%2Curl%2Cstate%2CtemplateType%2CupdatedDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
+var solrTimePeriod = "%5BNOW%2FDAY+TO+*%5D";
+var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AupdatedDate%3A" + solrTimePeriod + "&sort=updatedDate+desc&fl=docId%2Curl%2Cstate%2CtemplateType%2CupdatedDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
 // ?
 
 // Kick off the whole thing after the popup loads.
@@ -71,9 +72,9 @@ function constructTaxeneBreadcrumbUrl(docId) {
 }
 
 function constructSolrUrl() {
-	var solrUrl = solrUrl + solrEndpoint + "?" + solrQueryParameters;
-	console.log(solrUrl);
-	return solrUrl;
+	var solrApiUrl = solrUrl + solrEndpoint + "?" + solrQueryParameters;
+	console.log("solrUrl: " + solrApiUrl);
+	return solrApiUrl;
 }
 
 function getTaxeneChildrenJson(apiUrl) {
@@ -120,6 +121,11 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 		table += "</tbody></table>";
 		$( '#taxeneBreadcrumb-data' ).append("<h3>Ancestors</h3>" + data);
 	});
+}
+
+function readParent(parentObject) {
+	var parent;
+	return parent;
 }
 
 function getSolrJson(apiUrl) {
