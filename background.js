@@ -54,14 +54,3 @@ function getSeleneJson(apiUrl, sendResponse) {
 		sendResponse(data.data.children.list);
 	});
 }
-
-/*
-//Send the Selene list back to content.js
-function sendListToContent(list) {
-	console.log("background.js sendListToContent about to send message");
-	chrome.runtime.sendMessage({
-		"message": "sendTaxeneChildren",
-		"list": list
-	});
-}
-*/

@@ -56,12 +56,3 @@ function createTable(list) {
 	table += "</tbody></table>";
 	return (table);
 }
-
-/*
-	Scope the listener and button to MY container to make sure I don't conflict with a class
-	
-	$container = $('#container');
-	$container.find('.button').on('click', function() {
-		$container.toggleClass('collapsed');	
-	});
-*/
