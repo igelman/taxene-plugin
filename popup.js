@@ -73,7 +73,9 @@ function constructTaxeneBreadcrumbUrl(docId) {
 
 
 function constructSolrUrl() {
-	return solrUrl + solrEndpoint + "?" + solrQueryParameters;
+	var solrUrl = solrUrl + solrEndpoint + "?" + solrQueryParameters;
+	console.log(solrUrl);
+	return solrUrl;
 }
 
 function getTaxeneChildrenJson(apiUrl) {
