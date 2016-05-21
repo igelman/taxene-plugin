@@ -109,13 +109,20 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 	$.getJSON( ajaxUrl, function( data ){
 		console.log("getTaxeneBreadcrumbJson:");
 		console.log(data);
+/*
+		var ancestorArray;
+		ancestorArray.push(readAncestor(data));
+*/
 	});
 }
 
+/*
 function readParent(parentObject) {
-	var parent;
-	return parent;
+	if (typeof parentObject.primaryParent != "undefined") {
+		readParent(parentObject.primaryParent);
+	}
 }
+*/
 
 function getSolrJson(apiUrl) {
 	var ajaxUrl = apiUrl;
