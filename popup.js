@@ -55,7 +55,7 @@ function doTheWholeThing (url) {
 function extractNodeId(url) {
 	var lastIndexOfHyphen = url.lastIndexOf("-");
 	if (lastIndexOfHyphen != -1) {
-	    var nodeId = url.substring(lastHyphen + 1);
+	    var nodeId = url.substring(lastIndexOfHyphen + 1);
         console.log("function extractNodeId\n" + "nodeId: " + nodeId);
 		return nodeId;
 	}
