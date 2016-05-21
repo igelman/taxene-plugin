@@ -30,12 +30,15 @@ chrome.runtime.onMessage.addListener(
 	}	
 );
 
-// DocId is (almost) always the numeric string following the last hyphen in the url.
+// DocId is (almost) always the numeric string following the last hyphen in the Verywell url.
 function extractNodeId(url) {
-    var lastHyphen = url.lastIndexOf("-");
-    var nodeId = url.substring(lastHyphen + 1);
-    console.log("function extractNodeId\n" + "nodeId: " + nodeId);
-    return nodeId;
+	var lastIndexOfHyphen = url.lastIndexOf("-");
+	if (lastIndexOfHyphen != -1) {
+	    var nodeId = url.substring(lastIndexOfHyphen + 1);
+        console.log("function extractNodeId\n" + "nodeId: " + nodeId);
+		return nodeId;
+	}
+	return false;
 }
 
 // Construct the Selene taxene api url from the node docId
