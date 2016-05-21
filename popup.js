@@ -15,7 +15,6 @@ var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
 var solrEndpoint = "solr/cmsDocs_rep/select";
 var solrTimePeriod = "%5BNOW%2FDAY+TO+*%5D";
 var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AupdatedDate%3A" + solrTimePeriod + "&sort=updatedDate+desc&fl=docId%2Curl%2Cstate%2CtemplateType%2CupdatedDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
-// ?
 
 // Kick off the whole thing after the popup loads.
 document.addEventListener('DOMContentLoaded', function(){
@@ -44,17 +43,23 @@ function getCurrentTabUrl(callback) {
 // GET the children from Selene (and print to a table).
 function doTheWholeThing (url) {
 	var nodeId = extractNodeId(url);
-	getTaxeneChildrenJson( constructTaxeneChildrenUrl(nodeId) );
+	if (nodeId) {
+		getTaxeneChildrenJson( constructTaxeneChildrenUrl(nodeId));
+		getTaxeneBreadcrumbJson( constructTaxeneBreadcrumbUrl(nodeId));
+	}
 	getSolrJson( constructSolrUrl() );
-	getTaxeneBreadcrumbJson( constructTaxeneBreadcrumbUrl(nodeId) );
+	
 }
 
-// DocId is (almost) always the numeric string following the last hyphen in the url.
+// DocId is (almost) always the numeric string following the last hyphen in the Verywell url.
 function extractNodeId(url) {
-    var lastHyphen = url.lastIndexOf("-");
-    var nodeId = url.substring(lastHyphen + 1);
-    console.log("function extractNodeId\n" + "nodeId: " + nodeId);
-    return nodeId;
+	var lastIndexOfHyphen = url.lastIndexOf("-");
+	if (lastIndexOfHyphen != -1) {
+	    var nodeId = url.substring(lastHyphen + 1);
+        console.log("function extractNodeId\n" + "nodeId: " + nodeId);
+		return nodeId;
+	}
+	return false;
 }
 
 function constructTaxeneChildrenUrl(docId) {
@@ -104,22 +109,6 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 	$.getJSON( ajaxUrl, function( data ){
 		console.log("getTaxeneBreadcrumbJson:");
 		console.log(data);
-		var table = "<table><thead><tr>";
-		table += "<th>Level</th><th>DocId</th><th>Slug</th><th>Weight</th>";
-		table += "</tr></thead><tbody>";
-/*
-		data.data.children.list.forEach( function(item, index) {
-			var cellArray = [
-				item.docId,
-				item.nodeType.toLowerCase(),
-				item.primaryParentWeight,	
-				"<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>"
-			];
-			table += makeTr(cellArray);
-		});
-*/
-		table += "</tbody></table>";
-		$( '#taxeneBreadcrumb-data' ).append("<h3>Ancestors</h3>" + data);
 	});
 }
 
