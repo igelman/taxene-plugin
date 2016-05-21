@@ -49,7 +49,19 @@ function doTheWholeThing (url) {
 	}
 	getSolrJson( constructSolrUrl() );
 	
+	//console.log("recurse: " + recurse(accumulator, [] ));
+	
 }
+
+
+function recurse(localAccumulator, arrayOfNumbers) {
+	if (arrayOfNumbers.length == 0) {
+		console.log ("no array");
+		return 0;
+	}
+	console.log("typeof arrayofnumbers: " + typeof(arrayOfNumbers) + " arrayOfNumbers length: " + length + ", arrayOfNumbers.pop(): " + arrayOfNumbers.pop());
+}
+
 
 // DocId is (almost) always the numeric string following the last hyphen in the Verywell url.
 function extractNodeId(url) {
