@@ -128,14 +128,19 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 		var counter = 0;
 		while (flag == true) {
 			var ancestor = readAncestor(ancestorsObject);
-			ancestorsArray.push(ancestor);
-			// now set ancestorsObjet to the next parent
-/*
-			if (typeof ancestor.primaryParent != "undefined") {
+			ancestorsArray.push([
+				ancestor.docId,
+				ancestor.url,
+				ancestor.slug,
+				ancestor.title,
+				ancestor.shortHeading,
+				ancestor.primaryParentWeight,
+			]);
+			ancestorsObject = ancestor.primaryParent;
+			if (typeof ancestor.primaryParent == "undefined") {
 				flag = false;
 			}
-*/
-			console.log("typeof ancestor.primaryParent: " + typeof ancestor.primaryParent);
+			console.log("counter: " + counter + " typeof ancestor.primaryParent: " + typeof ancestor.primaryParent);
 			if (counter > 10) {
 				flag = false;	
 			}
