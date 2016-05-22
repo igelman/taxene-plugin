@@ -121,20 +121,42 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 	$.getJSON( ajaxUrl, function( data ){
 		console.log("getTaxeneBreadcrumbJson:");
 		console.log(data);
+		
+		var ancestorsObject = data.data.primaryParent;
+		var ancestorsArray = [];
+		var flag = true;
+		var counter = 0;
+		while (flag == true) {
+			var ancestor = readAncestor(ancestorsObject);
+			ancestorsArray.push(ancestor);
+			// now set ancestorsObjet to the next parent
 /*
-		var ancestorArray;
-		ancestorArray.push(readAncestor(data));
+			if (typeof ancestor.primaryParent != "undefined") {
+				flag = false;
+			}
 */
+			console.log("typeof ancestor.primaryParent: " + typeof ancestor.primaryParent);
+			if (counter > 10) {
+				flag = false;	
+			}
+		}
+		console.log("ancestorsArray: " + ancestorsArray);
 	});
 }
 
-/*
-function readParent(parentObject) {
-	if (typeof parentObject.primaryParent != "undefined") {
-		readParent(parentObject.primaryParent);
-	}
+
+function readAncestor(ancestorObject) {
+	var ancestor = {};
+	ancestor.docId = ancestorObject.docId;
+	ancestor.url = ancestorObject.document.url;
+	ancestor.slug = ancestorObject.document.slug;
+	ancestor.title = ancestorObject.document.title;
+	ancestor.shortHeading = ancestorObject.document.shortHeading;
+	ancestor.primaryParentWeight = ancestorObject.primaryParentWeight;
+	ancestor.primaryParent = ancestorObject.primaryParent;
+	
+	return ancestor;
 }
-*/
 
 function getSolrJson(apiUrl) {
 	var ajaxUrl = apiUrl;
