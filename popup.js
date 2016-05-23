@@ -122,29 +122,33 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 		console.log("getTaxeneBreadcrumbJson:");
 		console.log(data);
 		
+		var table = "<table><thead><tr>";
+		table += "<th>docId</th><th>Slug</th><th>Title</th><th>Short heading</th><th>Parent weight</th>";
+		table += "</tr></thead><tbody>";
+
+		
 		var ancestorsObject = data.data.primaryParent;
 		var ancestorsArray = [];
-		var flag = true;
-		var counter = 0;
-		while (flag == true) {
+		var hasParent = true;
+		while (hasParent == true) {
 			var ancestor = readAncestor(ancestorsObject);
-			ancestorsArray.push([
+			var cellArray = [
 				ancestor.docId,
-				ancestor.url,
-				ancestor.slug,
+				"<a target='_blank' href='" + ancestor.url + "'>" + ancestor.slug + "</a>",
 				ancestor.title,
 				ancestor.shortHeading,
-				ancestor.primaryParentWeight,
-			]);
+				ancestor.primaryParentWeight
+			];
+			table += makeTr(cellArray);
+			ancestorsArray.push(ancestor);
 			ancestorsObject = ancestor.primaryParent;
 			if (typeof ancestor.primaryParent == "undefined") {
-				flag = false;
+				hasParent = false;
 			}
-			console.log("counter: " + counter + " typeof ancestor.primaryParent: " + typeof ancestor.primaryParent);
-			if (counter > 10) {
-				flag = false;	
-			}
+			console.log("typeof ancestor.primaryParent: " + typeof ancestor.primaryParent);
 		}
+		table += "</tbody></table>";
+		$( '#taxene-breadcrumb' ).append("<h3>Breadcrumb</h3>" + table);
 		console.log("ancestorsArray: " + ancestorsArray);
 	});
 }
@@ -159,6 +163,7 @@ function readAncestor(ancestorObject) {
 	ancestor.shortHeading = ancestorObject.document.shortHeading;
 	ancestor.primaryParentWeight = ancestorObject.primaryParentWeight;
 	ancestor.primaryParent = ancestorObject.primaryParent;
+	console.log(ancestor);
 	
 	return ancestor;
 }
