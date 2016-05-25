@@ -115,7 +115,8 @@ function getTaxeneChildrenJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-		$( '#taxene-data' ).append("<h3>Children</h3>" + table);
+		$( '#taxene-data' ).append("<h3><a name='children'></a>Children <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + table);
+		$( '#table-of-contents-ul' ).append("<li><a href='#children'>Children</a></li>");
 		$( '#status' ).html("");
 	});
 }
@@ -152,7 +153,8 @@ function getTaxeneBreadcrumbJson(apiUrl) {
 			console.log("typeof ancestor.primaryParent: " + typeof ancestor.primaryParent);
 		}
 		table += "</tbody></table>";
-		$( '#taxene-breadcrumb' ).append("<h3>Breadcrumb</h3>" + table);
+		$( '#taxene-breadcrumb' ).append("<h3><a name='breadcrumb'></a>Breadcrumb <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + table);
+		$( '#table-of-contents-ul' ).append("<li><a href='#breadcrumb'>Breadcrumb</a></li>");
 		console.log("ancestorsArray: " + ancestorsArray);
 	});
 }
@@ -189,7 +191,8 @@ function getSolrJson(apiUrl) {
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-		$( '#solr-data' ).append("<h3>Approved docs</h3>" + table);
+		$( '#solr-data' ).append("<h3><a name='approved-docs'></a>Approved docs <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + table);
+		$( '#table-of-contents-ul' ).append("<li><a href='#approved-docs'>Approved docs</a></li>");
 	});
 }
 

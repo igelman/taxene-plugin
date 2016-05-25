@@ -33,3 +33,7 @@ table, th, td {
     border-bottom: 1px solid #cccccc;
     border-collapse: collapse;
 }
+
+.link-to-top {
+	font-size: 15px;
+}
