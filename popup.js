@@ -12,11 +12,12 @@ var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 	Config settings for Solr api.	
 	https://jira.corp.about-inc.com/browse/HN-1503
 	http://nyqasolrmaster1.ops.about.com:8983/solr/cmsDocs/select?q=state%3AACTIVE%0Avertical%3AHEALTH%0AactiveDate%3A%5BNOW%2FYEAR+TO+*%5D&sort=activeDate+desc&wt=json&indent=true
+	http://nyprsolr-read.ops.about.com:8983/solr/cmsDocs_rep/select?q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*&sort=updatedDate+desc&wt=json&indent=true
 */
 var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
 var solrEndpoint = "solr/cmsDocs_rep/select";
-var solrTimePeriod = "%5BNOW%2FDAY+TO+*%5D"; // start of current day => now
-var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AactiveDate%3A" + solrTimePeriod + "&sort=activeDate+desc&rows=200&fl=docId%2Curl%2Cstate%2CtemplateType%2CactiveDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
+var solrTimePeriod = "%5BNOW%2FMONTH+TO+*%5D"; // start of current day => now
+var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*%0AactiveDate%3A" + solrTimePeriod + "&sort=activeDate+desc&rows=200&fl=docId%2Curl%2Cstate%2CtemplateType%2CactiveDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
 //var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AupdatedDate%3A" + solrTimePeriod + "&sort=updatedDate+desc&fl=docId%2Curl%2Cstate%2CtemplateType%2CupdatedDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
 
 // Kick off the whole thing after the popup loads.
@@ -181,9 +182,9 @@ function getSolrJson(apiUrl) {
 		data.response.docs.forEach( function(item, index) {
 			var cellArray = [
 				item.docId,
-				item.updatedDate,	
+				"", //item.updatedDate,	
 				"<a target='_blank' href='" + item.url + "'>" + item.title + "</a>",
-				item.slug
+				"" //item.slug
 			];
 			table += makeTr(cellArray);
 		});
