@@ -18,11 +18,11 @@
 				"libraries/jquery-2.2.3.min.js",
 				"libraries/jquery-ui.min.js",
 				"content.js",
-				"libraries/DataTables/datatables.min.js"
+				"libraries/datatables.min.js"
 			],
 			"css": [
 				"libraries/jquery-ui.min.css",
-				"libraries/DataTables/datatables.min.css",
+				"libraries/datatables.min.css",
 				"content.css"
 			]
 
