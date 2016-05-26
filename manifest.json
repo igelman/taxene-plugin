@@ -17,10 +17,12 @@
 			"js": [
 				"libraries/jquery-2.2.3.min.js",
 				"libraries/jquery-ui.min.js",
-				"content.js"
+				"content.js",
+				"libraries/DataTables/datatables.min.js"
 			],
 			"css": [
 				"libraries/jquery-ui.min.css",
+				"libraries/DataTables/datatables.min.css",
 				"content.css"
 			]
 
@@ -43,8 +45,7 @@
 		"activeTab",
 		"https://ajax.googleapis.com/",
 		"http://nyselene1.ops.about.com:8080/",
-		"http://nyprsolr-read.ops.about.com:8983/",
-		"https://cdn.datatables.net/"
+		"http://nyprsolr-read.ops.about.com:8983/"
 	],
 	
 	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"

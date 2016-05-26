@@ -108,7 +108,7 @@ function getTaxeneChildrenJson(apiUrl) {
 	var ajaxUrl = apiUrl;
 	$.getJSON( ajaxUrl, function( data ){
 		console.log(data);
-		var table = "<table><thead><tr>";
+		var table = "<table id='taxene-data-table'><thead><tr>";
 		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
 		table += "</tr></thead><tbody>";
 		data.data.children.list.forEach( function(item, index) {
@@ -122,6 +122,7 @@ function getTaxeneChildrenJson(apiUrl) {
 		});
 		table += "</tbody></table>";
 		$( '#taxene-data' ).append("<h3><a name='children'></a>Children <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + table);
+		$( '#taxene-data-table' )
 		$( '#table-of-contents-ul' ).append("<li><a href='#children'>Children</a></li>");
 		$( '#status' ).html("");
 	});
@@ -184,7 +185,7 @@ function getSolrJson(apiUrl) {
 	var ajaxUrl = apiUrl;
 	$.getJSON( ajaxUrl, function (data) {
 		console.log(data);
-		var table = "<table><thead><tr>";
+		var table = "<table id = 'solr-data-table'><thead><tr>";
 		table += "<th>Doc id</th><th>Updated date</th><th>Title</th><th>Template</th><th>Author</th>";
 		table += "</tr></thead><tbody>";
 		data.response.docs.forEach( function(item, index) {
@@ -200,6 +201,7 @@ function getSolrJson(apiUrl) {
 		table += "</tbody></table>";
 		var solrInfo = "query: " + solrQuery + "<br>Fields: " + solrFieldList + "<br>Rows: " + solrRows;
 		$( '#solr-data' ).append("<h3><a name='approved-docs'></a>Approved docs <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + "<p><pre>" + solrInfo + "</pre></p>" + table);
+		$( '#solr-data-table' ).DataTable();
 		$( '#table-of-contents-ul' ).append("<li><a href='#approved-docs'>Approved docs</a></li>");
 	});
 }
