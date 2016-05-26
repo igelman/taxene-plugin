@@ -16,8 +16,14 @@ var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 */
 var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
 var solrEndpoint = "solr/cmsDocs_rep/select";
-var solrTimePeriod = "%5BNOW%2FMONTH+TO+*%5D"; // start of current day => now
-var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*%0AactiveDate%3A" + solrTimePeriod + "&sort=activeDate+desc&rows=200&fl=docId%2Curl%2Cstate%2CtemplateType%2CactiveDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
+//var solrTimePeriod = "%5BNOW%2FMONTH+TO+*%5D"; // start of current day => now
+//var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*%0AactiveDate%3A" + solrTimePeriod + "&sort=activeDate+desc&rows=200&fl=docId%2Curl%2Cstate%2CtemplateType%2CactiveDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
+var solrQuery = "vertical:HEALTH state:ACTIVE -rootUrl:*about.com* activeDate:[NOW/MONTH TO *]";
+var solrFieldList = "docId,url,state,templateType,activeDate,dirName,channel,title,authorKey,updatedDate";
+var solrSort = "activeDate desc";
+var solrRows = "200";
+
+var solrQueryParameters = "q=" + encodeURIComponent(solrQuery) + "&fl=" + encodeURIComponent( solrFieldList) + "&sort=" + encodeURIComponent(solrSort) + "&rows=" + encodeURIComponent(solrRows) + "&wt=json&indent=true"
 //var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AupdatedDate%3A" + solrTimePeriod + "&sort=updatedDate+desc&fl=docId%2Curl%2Cstate%2CtemplateType%2CupdatedDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
 
 // Kick off the whole thing after the popup loads.
@@ -179,19 +185,21 @@ function getSolrJson(apiUrl) {
 	$.getJSON( ajaxUrl, function (data) {
 		console.log(data);
 		var table = "<table><thead><tr>";
-		table += "<th>docId</th><th>Updated</th><th>Title</th><th>Slug</th>";
+		table += "<th>Doc id</th><th>Updated date</th><th>Title</th><th>Template</th><th>Author</th>";
 		table += "</tr></thead><tbody>";
 		data.response.docs.forEach( function(item, index) {
 			var cellArray = [
 				item.docId,
-				"", //item.updatedDate,	
+				item.updatedDate,	
 				"<a target='_blank' href='" + item.url + "'>" + item.title + "</a>",
-				"" //item.slug
+				item.templateType.toLowerCase(),
+				item.authorKey
 			];
 			table += makeTr(cellArray);
 		});
 		table += "</tbody></table>";
-		$( '#solr-data' ).append("<h3><a name='approved-docs'></a>Approved docs <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + table);
+		var solrInfo = "query: " + solrQuery + "<br>Fields: " + solrFieldList + "<br>Rows: " + solrRows;
+		$( '#solr-data' ).append("<h3><a name='approved-docs'></a>Approved docs <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + "<p><pre>" + solrInfo + "</pre></p>" + table);
 		$( '#table-of-contents-ul' ).append("<li><a href='#approved-docs'>Approved docs</a></li>");
 	});
 }
