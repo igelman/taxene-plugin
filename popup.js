@@ -14,17 +14,14 @@ var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 	http://nyqasolrmaster1.ops.about.com:8983/solr/cmsDocs/select?q=state%3AACTIVE%0Avertical%3AHEALTH%0AactiveDate%3A%5BNOW%2FYEAR+TO+*%5D&sort=activeDate+desc&wt=json&indent=true
 	http://nyprsolr-read.ops.about.com:8983/solr/cmsDocs_rep/select?q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*&sort=updatedDate+desc&wt=json&indent=true
 */
-var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
-var solrEndpoint = "solr/cmsDocs_rep/select";
-//var solrTimePeriod = "%5BNOW%2FMONTH+TO+*%5D"; // start of current day => now
-//var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*%0AactiveDate%3A" + solrTimePeriod + "&sort=activeDate+desc&rows=200&fl=docId%2Curl%2Cstate%2CtemplateType%2CactiveDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
 var solrQuery = "vertical:HEALTH state:ACTIVE -rootUrl:*about.com* activeDate:[NOW/MONTH TO *]";
 var solrFieldList = "docId,url,state,templateType,activeDate,dirName,channel,title,authorKey,updatedDate";
 var solrSort = "activeDate desc";
 var solrRows = "200";
 
 var solrQueryParameters = "q=" + encodeURIComponent(solrQuery) + "&fl=" + encodeURIComponent( solrFieldList) + "&sort=" + encodeURIComponent(solrSort) + "&rows=" + encodeURIComponent(solrRows) + "&wt=json&indent=true"
-//var solrQueryParameters = "q=vertical%3AHEALTH%0Astate%3AACTIVE%0AupdatedDate%3A" + solrTimePeriod + "&sort=updatedDate+desc&fl=docId%2Curl%2Cstate%2CtemplateType%2CupdatedDate%2CdirName%2Cchannel%2Ctitle&wt=json&indent=true";
+var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
+var solrEndpoint = "solr/cmsDocs_rep/select";
 
 // Kick off the whole thing after the popup loads.
 document.addEventListener('DOMContentLoaded', function(){
