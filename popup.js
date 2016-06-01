@@ -87,7 +87,7 @@ function constructTaxeneChildrenUrl(docId) {
 	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
 	return apiUrl;
 }
-
+ 
 function constructTaxeneBreadcrumbUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneBreadcrumbEndpoint + docId + "?" + taxeneBreadcrumbQueryParameters;
@@ -104,13 +104,14 @@ function constructSolrUrl() {
 function getTaxeneChildrenJson(apiUrl) {
 	var ajaxUrl = apiUrl;
 	
-	function processChildrenJson(data) {
+	// Declare the function for both getJson.success & .fail (since Selene returns 400 even though there's actually a good response).
+	function processChildrenJson(children) {
 		console.log("getTaxeneChildrenJson.processChildrenJson");
-		console.log(data);
+		console.log(children);
 		var table = "<table id='taxene-data-table'><thead><tr>";
 		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
 		table += "</tr></thead><tbody>";
-		data.data.children.list.forEach( function(item, index) {
+		children.list.forEach( function(item, index) {
 			var cellArray = [
 				item.docId,
 				item.nodeType.toLowerCase(),
@@ -126,28 +127,15 @@ function getTaxeneChildrenJson(apiUrl) {
 		$( '#status' ).html("");
 	}
 	
-	$.getJSON( ajaxUrl, processChildrenJson/*
-function( data ){
-		console.log(data);
-		var table = "<table id='taxene-data-table'><thead><tr>";
-		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
-		table += "</tr></thead><tbody>";
-		data.data.children.list.forEach( function(item, index) {
-			var cellArray = [
-				item.docId,
-				item.nodeType.toLowerCase(),
-				item.primaryParentWeight.toLocaleString(),	
-				"<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>"
-			];
-			table += makeTr(cellArray);
-		});
-		table += "</tbody></table>";
-		$( '#taxene-data' ).append("<h3><a name='children'></a>Children <a class='link-to-top' href='#top'>top &#8593;</a></h3>" + table);
-		$( '#taxene-data-table' )
-		$( '#table-of-contents-ul' ).append("<li><a href='#children'>Children</a></li>");
-		$( '#status' ).html("");
-	}
-*/);
+	$.getJSON( ajaxUrl, function(data) {
+		console.log("thumbs up");
+		console.log(data.data.children);
+		processChildrenJson(data.data.children);
+	}).fail(function (data) {
+		console.log("oops");
+		console.log(data.responseJSON.data);
+		processChildrenJson(data.responseJSON.data.children);
+	});
 }
 
 function getTaxeneBreadcrumbJson(apiUrl) {
