@@ -84,14 +84,14 @@ function extractNodeId(url) {
 function constructTaxeneChildrenUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneChildrenEndpoint + docId + "?" + taxeneChildrenQueryParameters;
-	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
+	console.log("function constructTaxeneChildrenUrl\n" + "apiUrl: " + apiUrl);
 	return apiUrl;
 }
  
 function constructTaxeneBreadcrumbUrl(docId) {
 	var apiUrl = "";
 	apiUrl += seleneUrl + taxeneBreadcrumbEndpoint + docId + "?" + taxeneBreadcrumbQueryParameters;
-	console.log("function constructApiUrl\n" + "apiUrl: " + apiUrl);
+	console.log("function constructTaxeneBreadcrumbUrl\n" + "apiUrl: " + apiUrl);
 	return apiUrl;
 }
 
@@ -108,10 +108,12 @@ function getTaxeneChildrenJson(apiUrl) {
 	function processChildrenJson(children) {
 		console.log("getTaxeneChildrenJson.processChildrenJson");
 		console.log(children);
+		var weights = [];
 		var table = "<table id='taxene-data-table'><thead><tr>";
 		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
 		table += "</tr></thead><tbody>";
 		children.list.forEach( function(item, index) {
+			weights.push(item.primaryParentWeight);
 			var cellArray = [
 				item.docId,
 				item.nodeType.toLowerCase(),
@@ -125,6 +127,7 @@ function getTaxeneChildrenJson(apiUrl) {
 		$( '#taxene-data-table' )
 		$( '#table-of-contents-ul' ).append("<li><a href='#children'>Children</a></li>");
 		$( '#status' ).html("");
+		console.log("processChildrenJson weights: " + weights);
 	}
 	
 	$.getJSON( ajaxUrl, function(data) {
