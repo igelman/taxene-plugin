@@ -127,7 +127,14 @@ function getTaxeneChildrenJson(apiUrl) {
 		$( '#taxene-data-table' )
 		$( '#table-of-contents-ul' ).append("<li><a href='#children'>Children</a></li>");
 		$( '#status' ).html("");
-		console.log("processChildrenJson weights: " + weights);
+		processChildrenWeights(weights);
+	}
+	
+	function processChildrenWeights(weights) {
+		weights.sort(function(a, b){return b-a});
+		console.log("processChildren weights: " + weights);
+		var middle = Math.floor(weights.length / 2);
+		console.log ("max: " + weights[0] + "\nmedian: " + weights[middle] + "\nmin: " + weights[weights.length - 1]);
 	}
 	
 	$.getJSON( ajaxUrl, function(data) {
