@@ -14,7 +14,8 @@ var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 	http://nyqasolrmaster1.ops.about.com:8983/solr/cmsDocs/select?q=state%3AACTIVE%0Avertical%3AHEALTH%0AactiveDate%3A%5BNOW%2FYEAR+TO+*%5D&sort=activeDate+desc&wt=json&indent=true
 	http://nyprsolr-read.ops.about.com:8983/solr/cmsDocs_rep/select?q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*&sort=updatedDate+desc&wt=json&indent=true
 */
-var solrQuery = "vertical:HEALTH state:ACTIVE -templateType:VIDEO -rootUrl:*about.com* activeDate:[NOW/MONTH TO *]";
+var solrQuery = "vertical:HEALTH state:ACTIVE -templateType:VIDEO -rootUrl:*about.com* activeDate:[NOW-30DAYS/MONTH TO *]"; // activeDate:[NOW/MONTH TO *]
+
 var solrFieldList = "docId,url,state,templateType,activeDate,dirName,channel,title,authorKey,updatedDate";
 var solrSort = "activeDate desc";
 var solrRows = "200";
