@@ -111,7 +111,7 @@ function getTaxeneChildrenJson(apiUrl) {
 		console.log(children);
 		var weights = [];
 		var table = "<table id='taxene-data-table'><thead><tr>";
-		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th>";
+		table += "<th>docId</th><th>Type</th><th>Weight</th><th>Slug</th><th>Title</th>";
 		table += "</tr></thead><tbody>";
 		children.list.forEach( function(item, index) {
 			weights.push(item.primaryParentWeight);
@@ -119,7 +119,8 @@ function getTaxeneChildrenJson(apiUrl) {
 				item.docId,
 				item.nodeType.toLowerCase(),
 				item.primaryParentWeight.toLocaleString(),	
-				"<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>"
+				"<a target='_blank' href='" + item.document.url + "'>" + item.document.slug + "</a>",
+				item.document.title
 			];
 			table += makeTr(cellArray);
 		});
