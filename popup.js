@@ -1,3 +1,5 @@
+
+
 /*
 	Config settings for Selene api.	
 */
@@ -11,18 +13,17 @@ var taxeneBreadcrumbQueryParameters = "includeDocumentSummaries=true";
 /*
 	Config settings for Solr api.	
 	https://jira.corp.about-inc.com/browse/HN-1503
-	http://nyqasolrmaster1.ops.about.com:8983/solr/cmsDocs/select?q=state%3AACTIVE%0Avertical%3AHEALTH%0AactiveDate%3A%5BNOW%2FYEAR+TO+*%5D&sort=activeDate+desc&wt=json&indent=true
-	http://nyprsolr-read.ops.about.com:8983/solr/cmsDocs_rep/select?q=vertical%3AHEALTH%0Astate%3AACTIVE%0A-rootUrl%3A*about.com*&sort=updatedDate+desc&wt=json&indent=true
+	http://nyprsolr-read.ops.about.com:8983/solr/about_rep/select?q=vertical%3A+%22HEALTH%22&sort=firstPublished+desc&wt=json&indent=true
 */
-var solrQuery = "vertical:HEALTH state:ACTIVE -templateType:VIDEO -rootUrl:*about.com* activeDate:[NOW-30DAYS/MONTH TO *]"; // activeDate:[NOW/MONTH TO *]
+var solrQuery = "vertical:HEALTH state:ACTIVE -templateType:VIDEO -rootUrl:*about.com* firstPublished:[NOW-30DAYS/MONTH TO *]"; // activeDate:[NOW-30DAYS/MONTH TO *] // activeDate:[NOW/MONTH TO *]
 
-var solrFieldList = "docId,url,state,templateType,activeDate,dirName,channel,title,authorKey,updatedDate";
-var solrSort = "activeDate desc";
+var solrFieldList = "docId,url,state,templateType,firstPublished,activeDate,dirName,channel,title,authorKey,updatedDate";
+var solrSort = "firstPublished desc"; // "activeDate desc";
 var solrRows = "200";
 
 var solrQueryParameters = "q=" + encodeURIComponent(solrQuery) + "&fl=" + encodeURIComponent( solrFieldList) + "&sort=" + encodeURIComponent(solrSort) + "&rows=" + encodeURIComponent(solrRows) + "&wt=json&indent=true"
-var solrUrl = "http://nyprsolr-read.ops.about.com:8983/";
-var solrEndpoint = "solr/cmsDocs_rep/select";
+var solrUrl = "http://nyprsolr-read.ops.about.com:8983/"; // "http://nyprsolr-read.ops.about.com:8983/";
+var solrEndpoint = "solr/about_rep/select"; // "solr/cmsDocs_rep/select";
 
 // Kick off the whole thing after the popup loads.
 document.addEventListener('DOMContentLoaded', function(){
@@ -208,12 +209,12 @@ function getSolrJson(apiUrl) {
 	$.getJSON( ajaxUrl, function (data) {
 		console.log(data);
 		var table = "<table id = 'solr-data-table'><thead><tr>";
-		table += "<th>Doc id</th><th>Updated date</th><th>Title</th><th>Template</th><th>Author</th>";
+		table += "<th>Doc id</th><th>First published</th><th>Title</th><th>Template</th><th>Author</th>";
 		table += "</tr></thead><tbody>";
 		data.response.docs.forEach( function(item, index) {
 			var cellArray = [
 				item.docId,
-				item.updatedDate,	
+				item.firstPublished,	
 				"<a target='_blank' href='" + item.url + "'>" + item.title + "</a>",
 				item.templateType.toLowerCase(),
 				item.authorKey
