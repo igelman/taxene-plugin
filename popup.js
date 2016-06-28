@@ -57,6 +57,7 @@ function doTheWholeThing (url) {
 		getTaxeneBreadcrumbJson( constructTaxeneBreadcrumbUrl(nodeId));
 	}
 	getSolrJson( constructSolrUrl() );
+	getPendingApprovalList(); // this 403s because EP requires authentication
 	
 	//console.log("recurse: " + recurse(accumulator, [] ));
 	
@@ -101,6 +102,15 @@ function constructSolrUrl() {
 	var solrApiUrl = solrUrl + solrEndpoint + "?" + solrQueryParameters;
 	console.log("solrUrl: " + solrApiUrl);
 	return solrApiUrl;
+}
+
+function getPendingApprovalList() {
+	var ajaxUrl = "https://nyguidetools1.ops.about.com/api/documents/pending?limit=2000&page=1";
+	$.getJSON( ajaxUrl, function( data ) {
+		console.log("getPendingApprovalList:");
+		console.log(data);
+	});
+
 }
 
 function getTaxeneChildrenJson(apiUrl) {
