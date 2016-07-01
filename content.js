@@ -21,8 +21,7 @@ console.log("currentTabUrl: " + window.location.href);
 
 if (currentTabUrl == eosApprovalAppUrl) {
 	console.log("eos!");
-	$( 'table' ).DataTable();
-	// .DataTable();
+	$( 'table' ).DataTable(); // Uncaught TypeError: $(...).DataTable is not a function. But I'm already adding this in manifest.json, so why does this fail?
 }
 
 // Send message to request the taxene children
