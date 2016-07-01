@@ -14,6 +14,17 @@ foreach child
 	append the child's weight to the innertext or something
 */
 
+
+var eosApprovalAppUrl = "https://eos.ops.about.com/tools/pending/";
+var currentTabUrl = window.location.href;
+console.log("currentTabUrl: " + window.location.href);
+
+if (currentTabUrl == eosApprovalAppUrl) {
+	console.log("eos!");
+	$( 'table' ).DataTable();
+	// .DataTable();
+}
+
 // Send message to request the taxene children
 // When we receive the response, create a table.
 chrome.runtime.sendMessage({
