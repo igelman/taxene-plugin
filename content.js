@@ -19,10 +19,17 @@ var eosApprovalAppUrl = "https://eos.ops.about.com/tools/pending/";
 var currentTabUrl = window.location.href;
 console.log("currentTabUrl: " + window.location.href);
 
+/************
+	I didn't want to set up a separate plug-in
+	so added some functionality specifically for Eos
+*/
 if (currentTabUrl == eosApprovalAppUrl) {
-	console.log("eos!");
-	$( 'table' ).DataTable(); // Uncaught TypeError: $(...).DataTable is not a function. But I'm already adding this in manifest.json, so why does this fail?
+	setTimeout(function() {
+		console.log($('table').size());
+		$( 'table' ).DataTable();
+	}, 5000);
 }
+// **********
 
 // Send message to request the taxene children
 // When we receive the response, create a table.

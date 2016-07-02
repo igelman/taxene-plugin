@@ -18,8 +18,8 @@
 			"js": [
 				"libraries/jquery-2.2.3.min.js",
 				"libraries/jquery-ui.min.js",
-				"content.js",
-				"libraries/datatables.min.js"
+				"libraries/datatables.min.js",
+				"content.js"
 			],
 			"css": [
 				"libraries/jquery-ui.min.css",
